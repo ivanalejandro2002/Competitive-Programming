@@ -1,0 +1,56 @@
+iniciar-programa
+(*Instruccion que recive la cantidad de giros que hará karel*)
+define-nueva-instruccion girar(n) como inicio
+	repetir n veces gira-izquierda;
+fin;
+(*-----------------------------------------------------------------*)
+define-nueva-instruccion tomatodo como inicio
+	mientras no orientado-al-este hacer gira-izquierda;
+    avanza;
+    mientras junto-a-zumbador hacer coge-zumbador;
+fin;
+(*-----------------------------------------------------------------*)
+define-nueva-instruccion busca-entrada como inicio
+	girar(2);
+    avanza;
+    girar(3);
+    avanza;
+    mientras derecha-bloqueada hacer avanza;
+    (*Se va hasta abajo de la primera columna y ve al norte*)
+    girar(3);
+    avanza;
+    girar(3);
+    mientras frente-libre hacer avanza;
+    girar(2);
+fin;
+(*-----------------------------------------------------------------*)
+define-nueva-instruccion llena como inicio
+	(*Bucle infinito, pues está marcado cuando termina y no se sabe*)
+    mientras frente-libre o frente-bloqueado hacer inicio
+        (*Llenamos la fila*)
+        mientras frente-libre hacer inicio
+            deja-zumbador;
+            avanza;
+        fin;
+        deja-zumbador;
+        girar(2);
+        mientras frente-libre hacer avanza;
+        girar(1);
+        (*Si abajo hay pared es el fin*)
+        si frente-libre entonces inicio
+            avanza;
+            (*Si no había pared el piso estaría más abajo*)
+            si derecha-libre entonces sal-de-instruccion;
+            girar(1);
+        fin
+        sino sal-de-instruccion;
+    fin;
+fin;
+(*-----------------------------------------------------------------*)
+    inicia-ejecucion
+        tomatodo;
+        busca-entrada;
+        llena;
+        apagate;
+    termina-ejecucion
+finalizar-programa

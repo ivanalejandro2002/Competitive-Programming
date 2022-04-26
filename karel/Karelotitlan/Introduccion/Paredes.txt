@@ -1,0 +1,53 @@
+iniciar-programa
+(*Función que recibe un parámetro de veces que girará karel*)
+define-nueva-instruccion girar(n) como inicio
+	repetir n veces gira-izquierda;
+fin;
+(*--------------------------------------------------------------------*)
+define-nueva-instruccion quita-columna como inicio
+	mientras junto-a-zumbador y frente-libre hacer inicio
+    	coge-zumbador;
+        si frente-libre entonces avanza;
+    fin;
+    si junto-a-zumbador entonces coge-zumbador;
+fin;
+(*--------------------------------------------------------------------*)
+define-nueva-instruccion quita-todo como inicio
+	mientras no orientado-al-norte hacer gira-izquierda;
+    (*Cuando llegas a la pared te quedas viendo al este*)
+    mientras orientado-al-norte hacer inicio
+        quita-columna;
+        girar(2);
+        mientras frente-libre hacer avanza;
+        girar(1);
+        (*Solo volteará al norte si no hay pared*)
+        si frente-libre entonces inicio
+            avanza;
+            girar(1);
+        fin;
+    fin;
+fin;
+(*--------------------------------------------------------------------*)
+define-nueva-instruccion muro como inicio
+	girar(2);
+    mientras algun-zumbador-en-la-mochila hacer inicio
+    	deja-zumbador;
+        mientras frente-libre hacer inicio
+        	avanza;
+            deja-zumbador;
+        fin;
+        girar(3);
+        (*El caso en que el muro llegue hasta arriba*)
+        si frente-libre entonces avanza;
+        girar(3);
+        mientras frente-libre hacer avanza;
+        girar(2);
+    fin;
+fin;
+(*--------------------------------------------------------------------*)
+    inicia-ejecucion
+        quita-todo;
+        muro;
+        apagate;
+    termina-ejecucion
+finalizar-programa

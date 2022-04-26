@@ -1,0 +1,42 @@
+iniciar-programa
+(*Funcion que recive la cantidad de veces que gire karel*)
+define-nueva-instruccion girar(n) como inicio
+	repetir n veces gira-izquierda;
+fin;
+(*----------------------------------------------------------------*)
+(*Funcion que te lleva a la esquina*)
+define-nueva-instruccion esquina como inicio
+	mientras no orientado-al-oeste hacer gira-izquierda;
+    mientras frente-libre hacer avanza;
+    girar(1);
+    mientras frente-libre hacer avanza;
+fin;
+(*----------------------------------------------------------------*)
+(*Funcion que busca todo los zumbadores del mundo*)
+define-nueva-instruccion buscamundo como inicio
+	(*Cuando ya no ocurra sería la esquina*)
+	mientras frente-libre o derecha-libre hacer inicio
+    	mientras junto-a-zumbador hacer coge-zumbador;
+        si frente-libre entonces inicio
+        	avanza;
+        fin
+        sino inicio
+        	si derecha-libre entonces inicio
+            	girar(3);
+                avanza;
+                girar(3);
+                mientras frente-libre hacer avanza;
+                girar(2);
+            fin;
+        fin;
+    fin;
+    (*Por si hay algo en la esquina*)
+    mientras junto-a-zumbador hacer coge-zumbador;
+    esquina;
+    mientras algun-zumbador-en-la-mochila hacer deja-zumbador;
+fin;
+    inicia-ejecucion
+        buscamundo;
+        apagate;
+    termina-ejecucion
+finalizar-programa
