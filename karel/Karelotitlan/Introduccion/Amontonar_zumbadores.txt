@@ -1,0 +1,27 @@
+iniciar-programa
+define-nueva-instruccion toma-columna como inicio
+	mientras junto-a-zumbador hacer inicio
+    	mientras junto-a-zumbador hacer coge-zumbador;
+        si frente-libre entonces avanza;
+    fin;
+fin;
+(*----------------------------------------------------*)
+define-nueva-instruccion columnas como inicio
+    mientras junto-a-zumbador hacer inicio
+		toma-columna;
+    	repetir 2 veces gira-izquierda;
+    	mientras frente-libre hacer avanza;
+        mientras algun-zumbador-en-la-mochila hacer deja-zumbador;
+        gira-izquierda;
+        si frente-libre entonces inicio
+        	avanza;
+            gira-izquierda;
+        fin
+        sino sal-de-instruccion;
+    fin;
+fin;
+    inicia-ejecucion
+    	columnas;
+        apagate;
+    termina-ejecucion
+finalizar-programa
